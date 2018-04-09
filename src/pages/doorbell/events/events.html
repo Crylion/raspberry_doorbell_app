@@ -1,0 +1,18 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Doorbell Events</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<button ion-button secondary (click)="clearList()">Clear List</button>
+	<button ion-button primary (click)="addEvent()">Add TestEvent</button>
+	<ion-list>
+		<div ion-item *ngFor="let event of doorbellEvents" (click)="itemTapped($event, item)">
+			{{helper.isDateToday(event) ? helper.formatDateTime(event, '[Today] - HH.mm.ss') : helper.formatDateTime(event, 'DD. MM - HH.mm.ss')}}
+		</div>
+	</ion-list>
+</ion-content>

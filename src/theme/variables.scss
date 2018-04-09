@@ -33,14 +33,39 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-$colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+$palettes: (
+  blue: (
+    base: #488aff
+  ),
+  green: (
+    base: #32db64
+  ),
+  red: (
+    base: #f53d3d
+  ),
+  white: (
+    base: #f4f4f4
+  ),
+  black: (
+    base: #222
+  )
 );
 
+@function palette($palette, $tone: 'base') {
+	@return map-get(map-get($palettes, $palette), $tone);
+}
+
+$colors: (
+  primary: palette(blue),
+  secondary: palette(green),
+  danger: palette(red),
+  light: palette(white),
+  dark: palette(black)
+);
+
+@function color($color) {
+	@return map-get($colors, $color);
+}
 
 // App iOS Variables
 // --------------------------------------------------

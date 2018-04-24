@@ -1,0 +1,26 @@
+page-server {
+
+	.ip-input-container {
+		display: flex;
+		border-bottom: 1px solid getColor(sectionDivider);
+		padding-bottom: 5px;
+
+		ion-input {
+			flex: 1;
+		}
+
+		button {
+			flex-basis: 40px;
+
+			ion-spinner {
+				position: absolute;
+
+				* {
+					width: 28px;
+					height: 28px;
+					stroke: #FFF;
+				}
+			  }
+		}
+	}
+}

@@ -1,25 +1,28 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OneSignal, OSNotification } from '@ionic-native/onesignal';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Store } from '@ngrx/store';
 import { Nav, Platform } from 'ionic-angular';
 
+import * as DoorEvents from '../pages/doorbell/events/doorEvents.actions';
 import { EventsPage } from '../pages/doorbell/events/events.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { HomePage } from '../pages/home/home.component';
+import { AboutPage } from '../pages/preferences/about/about';
+import { ServerPreferencesPage } from '../pages/preferences/server/server';
+import * as ServerState from '../pages/preferences/server/serverState.actions';
+import { ApiService } from '../services/apiService';
 import { AppState } from './app.state';
-import * as DoorbellEvents from '../pages/doorbell/events/doorbellEvents.actions';
 
 @Component({
 	templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements OnInit {
 
 	@ViewChild(Nav)
 	public nav: Nav;
 
-	public rootPage: any = EventsPage;
+	public rootPage: any = HomePage;
 	public pages: Array<{ title: string, component: any }>;
 
 	constructor (
@@ -28,19 +31,45 @@ export class MyApp {
 		private splashScreen: SplashScreen,
 		private oneSignal: OneSignal,
 		private store: Store<AppState>,
-		private ngZone: NgZone) {
-
-		if (this.platform.is('cordova')) {
-			this.initializeApp();
-		}
+		private apiService: ApiService) {
 
 		// used for an example of ngFor and navigation
 		this.pages = [
 			{ title: 'Home', component: HomePage },
-			{ title: 'List', component: ListPage },
-			{ title: 'Doorbell', component: EventsPage }
+			{ title: 'Doorbell', component: EventsPage },
+			{ title: 'Server Preferences', component: ServerPreferencesPage },
+			{ title: 'About', component: AboutPage }
 		];
+	}
 
+	public ngOnInit () {
+
+		let serverState: any;
+		this.store.select((s: AppState) => s.serverState).subscribe((state) => {
+			serverState = state;
+		}).unsubscribe();
+
+		// Set online status to false by default
+		this.store.dispatch(new ServerState.UpdateStatus(false));
+		// Ping server with current Ip address to determine whether it is online
+		this.apiService.pingIpForServer(serverState.url).subscribe((result) => {
+			this.store.dispatch(new ServerState.UpdateStatus(true));
+			this.store.dispatch(new ServerState.UpdateVersion(result.version));
+
+			// Fetch door events for the first time to populate lists in home and events pages
+			this.apiService.fetchAllEvents().subscribe((events) => {
+				this.store.dispatch(new DoorEvents.SetEventList(events));
+				this.store.dispatch(new ServerState.UpdateStatus(true));
+			}, (error) => {
+				this.store.dispatch(new ServerState.UpdateStatus(false));
+			});
+		}, (error) => {
+			this.store.dispatch(new ServerState.UpdateStatus(false));
+		});
+
+		if (this.platform.is('cordova')) {
+			this.initializeApp();
+		}
 	}
 
 	public openPage (page) {
@@ -66,9 +95,6 @@ export class MyApp {
 			this.oneSignal.handleNotificationReceived().subscribe((notification: OSNotification) => {
 				// do something when notification is received
 				console.log('notification received! ' + JSON.stringify(notification));
-				this.ngZone.run(() => {
-					this.store.dispatch(new DoorbellEvents.AddEvent(new Date()));
-				});
 			});
 
 			this.oneSignal.handleNotificationOpened().subscribe(() => {

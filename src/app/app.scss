@@ -14,3 +14,19 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+body {
+	font-size: 62.5px;
+
+	* {
+		background-repeat: no-repeat;
+
+		&.icon-event-bell {
+			background-image: url('../assets/icon/bell.svg');
+		}
+
+		&.icon-event-lock {
+			background-image: url('../assets/icon/door.svg');
+		}
+	}
+}

@@ -48,6 +48,10 @@ $palettes: (
   ),
   black: (
     base: #222
+  ),
+  gray: (
+    base: #ccc,
+    light: #dcdcdc
   )
 );
 
@@ -60,10 +64,13 @@ $colors: (
   secondary: palette(green),
   danger: palette(red),
   light: palette(white),
-  dark: palette(black)
+  textLight: palette(white),
+  dark: palette(black),
+  sectionDivider: palette(gray),
+  sectionHeader: palette(gray, light)
 );
 
-@function color($color) {
+@function getColor($color) {
 	@return map-get($colors, $color);
 }
 

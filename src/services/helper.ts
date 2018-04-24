@@ -4,7 +4,6 @@ import * as moment from 'moment';
 @Injectable()
 export class Helper {
 
-
 	/**
 	 * Returns formatted dateTime string for a given Date object in the optional
 	 * string format, or in a default format

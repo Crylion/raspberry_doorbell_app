@@ -5,8 +5,7 @@ import { StoreModule, ActionReducer, MetaReducer } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { HomePage } from '../pages/home/home.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -15,6 +14,9 @@ import { storeSync } from '../services/persistence';
 import { reducers } from './app.reducers';
 import { EventsPage } from '../pages/doorbell/events/events.component';
 import { Helper } from '../services/helper';
+import { ApiService } from '../services/apiService';
+import { ServerPreferencesPage } from '../pages/preferences/server/server';
+import { AboutPage } from '../pages/preferences/about/about';
 
 export function localStorageSyncReducer (reducer: ActionReducer<any>): ActionReducer<any> {
 	return storeSync()(reducer);
@@ -26,8 +28,9 @@ export const metaReducers: MetaReducer<any, any>[] = [localStorageSyncReducer];
 	declarations: [
 		MyApp,
 		HomePage,
-		ListPage,
-		EventsPage
+		EventsPage,
+		ServerPreferencesPage,
+		AboutPage
 	],
 	imports: [
 		BrowserModule,
@@ -41,11 +44,13 @@ export const metaReducers: MetaReducer<any, any>[] = [localStorageSyncReducer];
 	entryComponents: [
 		MyApp,
 		HomePage,
-		ListPage,
-		EventsPage
+		EventsPage,
+		ServerPreferencesPage,
+		AboutPage
 	],
 	providers: [
 		Helper,
+		ApiService,
 		StatusBar,
 		SplashScreen,
 		OneSignal,

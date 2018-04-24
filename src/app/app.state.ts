@@ -1,5 +1,10 @@
+import { Event } from '../model/classes/event';
+
 export interface AppState {
-	doorbellEvents: {
-		dateTime: Date
-	}[];
+	doorEvents: Event[];
+	serverState: {
+		url: string,
+		version: string,
+		online: boolean
+	};
 }

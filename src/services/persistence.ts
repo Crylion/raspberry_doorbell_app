@@ -1,11 +1,15 @@
 import { isNullOrUndefined } from 'util';
+import { DoorbellEvent } from '../model/classes/doorbellEvent';
+import { DoorlockEvent } from '../model/classes/lockEvent';
+import { Event } from '../model/classes/event';
 
 const stateKeys = [
-	'doorbellEvents'
+	'doorEvents',
+	'serverState'
 ];
 let currentState: any;
 
-/*export const sanitizeObjectPropertyNames = (obj: any): any => {
+export const sanitizeObjectPropertyNames = (obj: any): any => {
 	for (const property in obj) {
 		if (obj.hasOwnProperty(property) && !isNullOrUndefined(obj[property])) {
 
@@ -27,15 +31,25 @@ let currentState: any;
 		}
 	}
 	return obj;
-};*/
+};
 
 const extractDoorbellEvents = (storage: Storage, state: {}, key): {} => {
-	const storedDoorbellEvents: any = JSON.parse(storage.getItem(key));
-	if (!isNullOrUndefined(storedDoorbellEvents)) {
-		const normalizedList: Date[] = [];
+	const storedDoorEvents: any = sanitizeObjectPropertyNames(JSON.parse(storage.getItem(key)));
+	if (!isNullOrUndefined(storedDoorEvents)) {
+		const normalizedList: Event[] = [];
 
-		for (const item of storedDoorbellEvents) {
-			normalizedList.push(new Date(item));
+		for (const item of storedDoorEvents) {
+			if ('buttonId' in item) {
+				normalizedList.push(DoorbellEvent.factory({
+					buttonId: item.id,
+					dateTime: item.dateTime
+				}));
+			} else if ('userName' in item) {
+				normalizedList.push(DoorlockEvent.factory({
+					userName: item.user,
+					dateTime: item.dateTime
+				}));
+			}
 		}
 
 		state[key] = normalizedList;
@@ -55,7 +69,7 @@ export const rehydrateApplicationState = (storage: Storage) => {
 	let state: {} = {};
 	for (const key of stateKeys) {
 		switch (key) {
-			case 'doorbellEvents':
+			case 'doorEvents':
 				state = extractDoorbellEvents(storage, state, key);
 				break;
 			default:

@@ -1,3 +1,93 @@
 page-home {
 
+	#homeContainer {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+
+		.server-info-banner {
+			display: flex;
+			font-size: 1.6rem;
+			padding: 5px 0;
+			min-height: 48px;
+
+			ion-icon {
+				height: 38px;
+				width: 38px;
+				font-size: 3.8rem;
+				margin-right: 10px;
+			}
+
+			.server-info {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+
+				.server-info-ip {
+
+				}
+
+				.server-info-status {
+					display: flex;
+
+					.server-info-availability {
+						color: getColor(secondary);
+						margin-right: 5px;
+
+						&.offline {
+							color: getColor(danger);
+						}
+					}
+
+					.server-info-version {
+
+					}
+				}
+			}
+		}
+
+		.recent-events-list {
+			overflow: auto;
+
+			ion-item-group {
+				// border: 1px solid getColor(sectionHeader);
+
+				.item {
+					padding-left: 0;
+
+					.event-container {
+						display: flex;
+
+						.event-type-icon {
+							height: 38px;
+							width: 38px;
+							margin-right: 10px;
+						}
+					}
+
+
+				}
+			}
+		}
+
+		.open-button-container {
+			display: flex;
+			height: 50px;
+			margin-top: auto;
+
+			.open-button {
+				height: 100%;
+				width: 100%;
+				box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+				background-color: getColor(primary);
+				color: getColor(textLight);
+				display: flex;
+				align-items: center;
+				justify-content: space-evenly;
+				text-align: center;
+				border-radius: 5px;
+				font-size: 2.6rem;
+			}
+		}
+	}
 }

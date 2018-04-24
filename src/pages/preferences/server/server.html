@@ -1,0 +1,21 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Home</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<div class="ip-input-container">
+		<ion-input [(ngModel)]="ipInput" type="text" placeholder="IP address of server"></ion-input>
+		<button ion-button secondary (click)="checkIp()">
+			<ion-icon *ngIf="busyCheckingIp === undefined" name="search"></ion-icon>
+			<ion-icon *ngIf="busyCheckingIp === false && serverState.online === true" name="checkmark"></ion-icon>
+			<ion-icon *ngIf="busyCheckingIp === false && serverState.online === false" name="close"></ion-icon>
+			<ion-spinner *ngIf="busyCheckingIp === true"></ion-spinner>
+		</button>
+	</div>
+
+</ion-content>

@@ -8,11 +8,22 @@
 </ion-header>
 
 <ion-content>
-	<button ion-button secondary (click)="clearList()">Clear List</button>
-	<button ion-button primary (click)="addEvent()">Add TestEvent</button>
-	<ion-list>
-		<div ion-item *ngFor="let event of doorbellEvents" (click)="itemTapped($event, item)">
-			{{helper.isDateToday(event) ? helper.formatDateTime(event, '[Today] - HH.mm.ss') : helper.formatDateTime(event, 'DD. MM - HH.mm.ss')}}
+	<div id="doorEventList">
+		<div class="event-list-container">
+			<ion-item-group>
+				<ion-item-divider>All Events</ion-item-divider>
+				<div ion-item *ngFor="let event of doorEvents">
+					<div class="event-container">
+						<div class="event-type-icon" [ngClass]="'icon-event-' + getTypeName(event)"></div>
+						<div class="event-details">
+							<div class="event-info">{{event.buttonId ? event.buttonId : event.userName}}</div>
+							<div class="event-time">{{helper.isDateToday(event.dateTime) ? helper.formatDateTime(event.dateTime, '[Today] - HH.mm.ss') : helper.formatDateTime(event.dateTime,
+								'DD. MM - HH.mm.ss')}}</div>
+						</div>
+					</div>
+				</div>
+			</ion-item-group>
 		</div>
-	</ion-list>
+		<button ion-button secondary class="clear-list-button" (click)="clearList()">Clear List</button>
+	</div>
 </ion-content>

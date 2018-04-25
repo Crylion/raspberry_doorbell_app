@@ -2,8 +2,10 @@ import { ActionReducerMap, Action } from '@ngrx/store';
 import { AppState } from './app.state';
 import { doorEventsReducer } from '../pages/doorbell/events/doorEvents.reducer';
 import { serverStateReducer } from '../pages/preferences/server/serverState.reducer';
+import { userPreferencesReducer } from '../pages/preferences/userPreferences.reducer';
 
 export const reducers: ActionReducerMap<AppState, Action> = {
 	doorEvents: doorEventsReducer,
-	serverState: serverStateReducer
+	serverState: serverStateReducer,
+	userPreferences: userPreferencesReducer
 };

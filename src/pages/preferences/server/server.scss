@@ -3,7 +3,7 @@ page-server {
 	.ip-input-container {
 		display: flex;
 		border-bottom: 1px solid getColor(sectionDivider);
-		padding-bottom: 5px;
+		padding-bottom: 20px;
 
 		ion-input {
 			flex: 1;
@@ -21,6 +21,34 @@ page-server {
 					stroke: #FFF;
 				}
 			  }
+		}
+	}
+
+	.user-preferences-input-container {
+		padding-top: 20px;
+
+		.user-preferences-input-header {
+			margin-bottom: 5px;
+		}
+
+		ion-input {
+			flex: 1;
+			margin-bottom: 15px;
+			border-bottom: 1px solid getColor(sectionDivider);
+		}
+
+		.user-preferences-bell-preference {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 15px;
+
+			.user-preferences-bell-preferences-header {
+				margin-bottom: 5px;
+			}
+
+			.bell-preference {
+
+			}
 		}
 	}
 }

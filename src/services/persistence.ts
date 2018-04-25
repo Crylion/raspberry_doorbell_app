@@ -2,10 +2,12 @@ import { isNullOrUndefined } from 'util';
 import { DoorbellEvent } from '../model/classes/doorbellEvent';
 import { DoorlockEvent } from '../model/classes/lockEvent';
 import { Event } from '../model/classes/event';
+import { BELL_IDENTIFIER } from '../model/enums/bellIds.enum';
 
 const stateKeys = [
 	'doorEvents',
-	'serverState'
+	'serverState',
+	'userPreferences'
 ];
 let currentState: any;
 
@@ -40,8 +42,19 @@ const extractDoorbellEvents = (storage: Storage, state: {}, key): {} => {
 
 		for (const item of storedDoorEvents) {
 			if ('buttonId' in item) {
+				let bellId = '';
+				switch (item.buttonId) {
+					case 'Top':
+						bellId = BELL_IDENTIFIER.TOP;
+						break;
+					case 'Bottom':
+						bellId = BELL_IDENTIFIER.BOTTOM;
+						break;
+					default:
+						bellId = BELL_IDENTIFIER.BOTTOM;
+				}
 				normalizedList.push(DoorbellEvent.factory({
-					buttonId: item.id,
+					buttonId: bellId,
 					dateTime: item.dateTime
 				}));
 			} else if ('userName' in item) {

@@ -37,7 +37,7 @@ export class MyApp implements OnInit {
 		this.pages = [
 			{ title: 'Home', component: HomePage },
 			{ title: 'Doorbell', component: EventsPage },
-			{ title: 'Server Preferences', component: ServerPreferencesPage },
+			{ title: 'Preferences', component: ServerPreferencesPage },
 			{ title: 'About', component: AboutPage }
 		];
 	}

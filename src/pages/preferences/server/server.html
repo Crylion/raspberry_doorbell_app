@@ -3,7 +3,7 @@
 		<button ion-button menuToggle>
 			<ion-icon name="menu"></ion-icon>
 		</button>
-		<ion-title>Home</ion-title>
+		<ion-title>Preferences</ion-title>
 	</ion-navbar>
 </ion-header>
 
@@ -16,6 +16,19 @@
 			<ion-icon *ngIf="busyCheckingIp === false && serverState.online === false" name="close"></ion-icon>
 			<ion-spinner *ngIf="busyCheckingIp === true"></ion-spinner>
 		</button>
+	</div>
+
+	<div class="user-preferences-input-container">
+		<div class="user-preferences-input-header">Username</div>
+		<ion-input [(ngModel)]="userNameInput" type="text" placeholder="Username"></ion-input>
+		<div class="user-preferences-bell-preference">
+			<div class="user-preferences-bell-preferences-header">Doorbell Preference</div>
+			<ion-item *ngFor="let bell of bellPreferences">
+				<ion-label>{{bell.type}}</ion-label>
+				<ion-checkbox class="bell-preference" checked="{{bell.active}}" (click)="toggleBell(bell)" ></ion-checkbox>
+			</ion-item>
+		</div>
+		<button ion-button secondary (click)="saveUserPreferences(userNameInput, bellPreferences)">Save</button>
 	</div>
 
 </ion-content>

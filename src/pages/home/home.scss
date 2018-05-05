@@ -72,13 +72,13 @@ page-home {
 
 		.open-button-container {
 			display: flex;
-			height: 50px;
 			margin-top: auto;
+			flex-direction: column;
 
 			.open-button {
-				height: 100%;
+				height: 60px;
 				width: 100%;
-				box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+				box-shadow: 0 5px 2px 0 rgba(0, 0, 0, 0.5);
 				background-color: getColor(primary);
 				color: getColor(textLight);
 				display: flex;
@@ -87,6 +87,17 @@ page-home {
 				text-align: center;
 				border-radius: 5px;
 				font-size: 2.6rem;
+
+				&:active {
+					box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.6);
+					transform: translateY(5px);
+				}
+
+				margin-bottom: 15px;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
 			}
 		}
 	}

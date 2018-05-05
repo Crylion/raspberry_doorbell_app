@@ -5,8 +5,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Store } from '@ngrx/store';
 import { Nav, Platform } from 'ionic-angular';
 
-import * as DoorEvents from '../pages/doorbell/events/doorEvents.actions';
-import { EventsPage } from '../pages/doorbell/events/events.component';
+import * as DoorEvents from '../pages/events/doorEvents.actions';
+import { EventsPage } from '../pages/events/events.component';
 import { HomePage } from '../pages/home/home.component';
 import { AboutPage } from '../pages/preferences/about/about';
 import { ServerPreferencesPage } from '../pages/preferences/server/server';
@@ -36,7 +36,7 @@ export class MyApp implements OnInit {
 		// used for an example of ngFor and navigation
 		this.pages = [
 			{ title: 'Home', component: HomePage },
-			{ title: 'Doorbell', component: EventsPage },
+			{ title: 'Events', component: EventsPage },
 			{ title: 'Preferences', component: ServerPreferencesPage },
 			{ title: 'About', component: AboutPage }
 		];

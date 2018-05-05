@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Event } from '../../../model/classes/event';
+import { Event } from '../../model/classes/event';
 
 export const CLEAR_DOOR_EVENTS = '[Door Events] Clear list';
 /**

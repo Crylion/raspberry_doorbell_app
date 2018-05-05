@@ -1,6 +1,6 @@
 import { ActionReducerMap, Action } from '@ngrx/store';
 import { AppState } from './app.state';
-import { doorEventsReducer } from '../pages/doorbell/events/doorEvents.reducer';
+import { doorEventsReducer } from '../pages/events/doorEvents.reducer';
 import { serverStateReducer } from '../pages/preferences/server/serverState.reducer';
 import { userPreferencesReducer } from '../pages/preferences/userPreferences.reducer';
 

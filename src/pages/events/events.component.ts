@@ -3,11 +3,14 @@ import { Store } from '@ngrx/store';
 import { isUndefined } from 'ionic-angular/util/util';
 import { Subscription } from 'rxjs/Subscription';
 
-import { AppState } from '../../../app/app.state';
-import { Helper } from '../../../services/helper';
-import * as ServerState from '../../preferences/server/serverState.actions';
+import { AppState } from '../../app/app.state';
+import { Helper } from '../../services/helper';
+import * as ServerState from '../preferences/server/serverState.actions';
 import * as DoorEvents from './doorEvents.actions';
-import { ApiService } from '../../../services/apiService';
+import { ApiService } from '../../services/apiService';
+import { DoorbellEvent } from '../../model/classes/doorbellEvent';
+import { DoorlockEvent } from '../../model/classes/lockEvent';
+import { GarageDoorEvent } from '../../model/classes/garageDoorEvent';
 
 @Component({
 	selector: 'page-events',
@@ -59,13 +62,14 @@ export class EventsPage implements OnInit, OnDestroy {
 	}
 
 	public getTypeName (event: Event): string {
-		switch (event.constructor.name) {
-			case 'DoorbellEvent':
-				return 'bell';
-			case 'DoorlockEvent':
-				return 'lock';
-			default:
-				return 'bell';
+		if (event instanceof DoorbellEvent) {
+			return 'bell';
+		} else if (event instanceof DoorlockEvent) {
+			return 'lock';
+		} else if (event instanceof GarageDoorEvent) {
+			return 'garage';
+		} else {
+			return 'bell';
 		}
 	}
 

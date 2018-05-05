@@ -12,7 +12,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { OneSignal } from '@ionic-native/onesignal';
 import { storeSync } from '../services/persistence';
 import { reducers } from './app.reducers';
-import { EventsPage } from '../pages/doorbell/events/events.component';
+import { EventsPage } from '../pages/events/events.component';
 import { Helper } from '../services/helper';
 import { ApiService } from '../services/apiService';
 import { ServerPreferencesPage } from '../pages/preferences/server/server';

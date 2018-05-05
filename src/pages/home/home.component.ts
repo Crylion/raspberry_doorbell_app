@@ -7,6 +7,9 @@ import { AppState } from '../../app/app.state';
 import { Event } from '../../model/classes/event';
 import { ApiService } from '../../services/apiService';
 import { Helper } from '../../services/helper';
+import { DoorbellEvent } from '../../model/classes/doorbellEvent';
+import { DoorlockEvent } from '../../model/classes/lockEvent';
+import { GarageDoorEvent } from '../../model/classes/garageDoorEvent';
 
 @Component({
 	selector: 'page-home',
@@ -31,9 +34,9 @@ export class HomePage implements OnInit, OnDestroy {
 	public ngOnInit () {
 		this.doorEventsSubscription = this.store.select((s: AppState) => s.doorEvents).subscribe((events) => {
 			if (events.length > 5) {
-				this.recentEvents = events.splice(events.length - 5, 5);
+				this.recentEvents = events.slice(events.length - 5, events.length).reverse();
 			} else {
-				this.recentEvents = events;
+				this.recentEvents = events.reverse();
 			}
 		});
 
@@ -51,8 +54,20 @@ export class HomePage implements OnInit, OnDestroy {
 	 * Click handler for 'open lock' button.
 	 * Sends request to api to trigger the door lock
 	 */
-	public sendOpenCommand () {
+	public sendOpenDoorCommand () {
 		this.apiService.openDoor().subscribe((result) => {
+			console.log(result);
+		}, (err) => {
+			console.log(err);
+		});
+	}
+
+	/**
+	 * Click handler for 'open garage' button.
+	 * Sends request to api to trigger the garage door
+	 */
+	public sendOpenGarageCommand () {
+		this.apiService.openGarageDoor().subscribe((result) => {
 			console.log(result);
 		}, (err) => {
 			console.log(err);
@@ -61,13 +76,14 @@ export class HomePage implements OnInit, OnDestroy {
 
 	// TODO
 	public getTypeName (event: Event): string {
-		switch (event.constructor.name) {
-			case 'DoorbellEvent':
-				return 'bell';
-			case 'DoorlockEvent':
-				return 'lock';
-			default:
-				return 'bell';
+		if (event instanceof DoorbellEvent) {
+			return 'bell';
+		} else if (event instanceof DoorlockEvent) {
+			return 'lock';
+		} else if (event instanceof GarageDoorEvent) {
+			return 'garage';
+		} else {
+			return 'bell';
 		}
 	}
 

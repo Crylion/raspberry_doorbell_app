@@ -10,6 +10,8 @@ import { Helper } from '../../services/helper';
 import { DoorbellEvent } from '../../model/classes/doorbellEvent';
 import { DoorlockEvent } from '../../model/classes/lockEvent';
 import { GarageDoorEvent } from '../../model/classes/garageDoorEvent';
+import * as ServerState from '../preferences/server/serverState.actions';
+import * as DoorEvents from '../events/doorEvents.actions';
 
 @Component({
 	selector: 'page-home',
@@ -71,6 +73,24 @@ export class HomePage implements OnInit, OnDestroy {
 			console.log(result);
 		}, (err) => {
 			console.log(err);
+		});
+	}
+
+	/**
+	 * Click handler for refresh icon in server info.
+	 * Pings the server to refresh events and online status
+	 */
+	public refreshStatus () {
+		// Ping server with current Ip address to determine whether it is online
+		this.apiService.pingIpForServer(this.serverState.url).subscribe((result) => {
+			this.store.dispatch(new ServerState.UpdateStatus(true));
+			this.store.dispatch(new ServerState.UpdateVersion(result.version));
+
+			this.apiService.fetchAllEvents().subscribe((events) => {
+				this.store.dispatch(new DoorEvents.SetEventList(events));
+			});
+		}, (error) => {
+			this.store.dispatch(new ServerState.UpdateStatus(false));
 		});
 	}
 

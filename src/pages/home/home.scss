@@ -8,18 +8,19 @@ page-home {
 		.server-info-banner {
 			display: flex;
 			font-size: 1.6rem;
-			padding: 5px 0;
+			align-items: center;
 			min-height: 48px;
 
-			ion-icon {
+			> ion-icon {
 				height: 38px;
-				width: 38px;
+				flex-basis: 38px;
 				font-size: 3.8rem;
 				margin-right: 10px;
 			}
 
 			.server-info {
 				display: flex;
+				flex: 1;
 				flex-direction: column;
 				justify-content: center;
 
@@ -42,6 +43,18 @@ page-home {
 					.server-info-version {
 
 					}
+				}
+			}
+
+			.refresh-button {
+				flex-basis: 48px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				align-self: stretch;
+
+				> ion-icon {
+					font-size: 2.8rem;
 				}
 			}
 		}

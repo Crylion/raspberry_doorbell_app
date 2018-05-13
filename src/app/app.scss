@@ -20,6 +20,15 @@ body {
 
 	* {
 		background-repeat: no-repeat;
+		color: getColor(textDark);
+
+		&.text-light {
+			color: getColor(textLight);
+
+			* {
+				color: getColor(textLight);
+			}
+		}
 
 		&.icon-event-bell {
 			background-image: url('../assets/icon/bell.svg');

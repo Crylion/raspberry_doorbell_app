@@ -50,6 +50,7 @@ $palettes: (
     base: #222
   ),
   gray: (
+    veryDark: #444,
     base: #ccc,
     light: #dcdcdc
   )
@@ -64,8 +65,9 @@ $colors: (
   secondary: palette(green),
   danger: palette(red),
   light: palette(white),
+  textDark: palette(gray, veryDark),
   textLight: palette(white),
-  dark: palette(black),
+  dark: palette(gray, veryDark),
   sectionDivider: palette(gray),
   sectionHeader: palette(gray, light)
 );

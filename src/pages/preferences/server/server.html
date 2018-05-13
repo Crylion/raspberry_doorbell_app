@@ -10,7 +10,7 @@
 <ion-content padding>
 	<div class="ip-input-container">
 		<ion-input [(ngModel)]="ipInput" type="text" placeholder="IP address of server"></ion-input>
-		<button ion-button secondary (click)="checkIp()">
+		<button ion-button secondary class="text-light" (click)="checkIp()">
 			<ion-icon *ngIf="busyCheckingIp === undefined" name="search"></ion-icon>
 			<ion-icon *ngIf="busyCheckingIp === false && serverState.online === true" name="checkmark"></ion-icon>
 			<ion-icon *ngIf="busyCheckingIp === false && serverState.online === false" name="close"></ion-icon>
@@ -28,7 +28,7 @@
 				<ion-checkbox class="bell-preference" checked="{{bell.active}}" (click)="toggleBell(bell)" ></ion-checkbox>
 			</ion-item>
 		</div>
-		<button ion-button secondary (click)="saveUserPreferences(userNameInput, bellPreferences)">Save</button>
+		<button ion-button secondary class="text-light" (click)="saveUserPreferences(userNameInput, bellPreferences)">Save</button>
 	</div>
 
 </ion-content>

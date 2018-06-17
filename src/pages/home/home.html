@@ -9,7 +9,7 @@
 
 <ion-content padding>
 	<div id="homeContainer">
-		<div class="server-info-banner">
+		<div class="server-info-banner" (click)="goToServerSettings()">
 			<ion-icon name="wifi"></ion-icon>
 			<div class="server-info">
 				<div class="server-info-ip">{{serverState.url}}</div>
@@ -18,7 +18,7 @@
 					<div class="server-info-version">v{{serverState.version}}</div>
 				</div>
 			</div>
-			<div class="refresh-button" (click)="refreshStatus()">
+			<div class="refresh-button" (click)="refreshStatus($event)">
 				<ion-icon *ngIf="busyCheckingState === false" name="refresh"></ion-icon>
 				<ion-spinner *ngIf="busyCheckingState === true"></ion-spinner>
 			</div>

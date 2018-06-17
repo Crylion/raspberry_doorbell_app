@@ -12,6 +12,7 @@ import { DoorlockEvent } from '../../model/classes/lockEvent';
 import { GarageDoorEvent } from '../../model/classes/garageDoorEvent';
 import * as ServerState from '../preferences/server/serverState.actions';
 import * as DoorEvents from '../events/doorEvents.actions';
+import { ServerPreferencesPage } from '../preferences/server/server';
 
 @Component({
 	selector: 'page-home',
@@ -38,7 +39,7 @@ export class HomePage implements OnInit, OnDestroy {
 	}
 
 	public ngOnInit () {
-		this.doorEventsSubscription = this.store.select((s: AppState) => s.doorEvents).subscribe((events) => {
+		this.doorEventsSubscription = this.store.select((s: AppState) => s.doorEvents).subscribe((events: Event[]) => {
 			if (events.length > 5) {
 				this.recentEvents = events.slice(events.length - 5, events.length).reverse();
 			} else {
@@ -81,10 +82,19 @@ export class HomePage implements OnInit, OnDestroy {
 	}
 
 	/**
+	 * Click handler for the info banner up top.
+	 * Pushes the server settings page to the nav stack
+	 */
+	public goToServerSettings () {
+		this.navCtrl.push(ServerPreferencesPage);
+	}
+
+	/**
 	 * Click handler for refresh icon in server info.
 	 * Pings the server to refresh events and online status
 	 */
-	public refreshStatus () {
+	public refreshStatus (event: any) {
+		event.stopPropagation();
 		this.busyCheckingState = true;
 
 		// Ping server with current Ip address to determine whether it is online

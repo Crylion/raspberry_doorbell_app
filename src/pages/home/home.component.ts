@@ -22,6 +22,7 @@ export class HomePage implements OnInit, OnDestroy {
 	public recentEvents: Event[];
 	public doorEventsSubscription: Subscription;
 	public serverState: any;
+	public busyCheckingState: boolean;
 
 	private stateSubscription: Subscription;
 
@@ -30,6 +31,9 @@ export class HomePage implements OnInit, OnDestroy {
 		public helper: Helper,
 		private apiService: ApiService,
 		private store: Store<AppState>) {
+
+			// TODO use state for spinner
+			this.busyCheckingState = false;
 
 	}
 
@@ -81,6 +85,8 @@ export class HomePage implements OnInit, OnDestroy {
 	 * Pings the server to refresh events and online status
 	 */
 	public refreshStatus () {
+		this.busyCheckingState = true;
+
 		// Ping server with current Ip address to determine whether it is online
 		this.apiService.pingIpForServer(this.serverState.url).subscribe((result) => {
 			this.store.dispatch(new ServerState.UpdateStatus(true));
@@ -89,8 +95,10 @@ export class HomePage implements OnInit, OnDestroy {
 			this.apiService.fetchAllEvents().subscribe((events) => {
 				this.store.dispatch(new DoorEvents.SetEventList(events));
 			});
+			this.busyCheckingState = false;
 		}, (error) => {
 			this.store.dispatch(new ServerState.UpdateStatus(false));
+			this.busyCheckingState = false;
 		});
 	}
 

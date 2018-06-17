@@ -8,7 +8,7 @@ import { AppState } from '../../../app/app.state';
 import { Subscription } from 'rxjs';
 import { BELL_IDENTIFIER } from '../../../model/enums/bellIds.enum';
 import { isUndefined } from 'ionic-angular/util/util';
-import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Component({
 	selector: 'page-server',

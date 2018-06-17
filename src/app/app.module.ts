@@ -7,9 +7,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home.component';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { OneSignal } from '@ionic-native/onesignal';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { storeSync } from '../services/persistence';
 import { reducers } from './app.reducers';
 import { EventsPage } from '../pages/events/events.component';

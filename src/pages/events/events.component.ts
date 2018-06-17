@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { isUndefined } from 'ionic-angular/util/util';
 import { Subscription } from 'rxjs/Subscription';
+import { AlertController } from 'ionic-angular';
 
 import { AppState } from '../../app/app.state';
 import { Helper } from '../../services/helper';
@@ -23,7 +24,8 @@ export class EventsPage implements OnInit, OnDestroy {
 
 	constructor (public helper: Helper,
 		private store: Store<AppState>,
-		private apiService: ApiService) {
+		private apiService: ApiService,
+		private alertCtrl: AlertController) {
 
 	}
 
@@ -48,19 +50,34 @@ export class EventsPage implements OnInit, OnDestroy {
 	}
 
 	/**
-	 * Click handler for "clear list" button.
-	 * Dispatches Action to clear the list of Doorbell Events
+	 * Shows a confimation dialog for deleting all events on the sever.
 	 */
-	public clearList () {
-		this.apiService.deleteAllEvents().subscribe(() => {
-			// next block
-		}, () => {
-			// error block
-		}, () => {
-			this.store.dispatch(new DoorEvents.ClearEvents());
+	public confirmDeletion () {
+		const alert = this.alertCtrl.create({
+			title: 'Confirm purchase',
+			message: 'Do you want to buy this book?',
+			buttons: [
+				{
+					text: 'Cancel',
+					role: 'cancel'
+				},
+				{
+					text: 'Delete',
+					role: 'confirm',
+					handler: () => {
+						this.clearList();
+					}
+				}
+			]
 		});
+		alert.present();
 	}
 
+	/**
+	 * Returns the Class Type of a given Event object,
+	 * to determine if it was a bell, door or garage event etc
+	 * @param event Reference to Event object
+	 */
 	public getTypeName (event: Event): string {
 		if (event instanceof DoorbellEvent) {
 			return 'bell';
@@ -71,6 +88,20 @@ export class EventsPage implements OnInit, OnDestroy {
 		} else {
 			return 'bell';
 		}
+	}
+
+	/**
+	 * Click handler for "clear list" button.
+	 * Dispatches Action to clear the list of Doorbell Events
+	 */
+	private clearList () {
+		this.apiService.deleteAllEvents().subscribe(() => {
+			// next block
+		}, () => {
+			// error block
+		}, () => {
+			this.store.dispatch(new DoorEvents.ClearEvents());
+		});
 	}
 
 }

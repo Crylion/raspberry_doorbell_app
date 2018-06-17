@@ -19,7 +19,8 @@
 				</div>
 			</div>
 			<div class="refresh-button" (click)="refreshStatus()">
-				<ion-icon name="refresh"></ion-icon>
+				<ion-icon *ngIf="busyCheckingState === false" name="refresh"></ion-icon>
+				<ion-spinner *ngIf="busyCheckingState === true"></ion-spinner>
 			</div>
 		</div>
 		<div class="recent-events-list">

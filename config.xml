@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.crylion.raspberry_doorbell" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="net.crylion.raspberry_doorbell" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Palim Palim</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="rhistan@gmail.com">Crylion</author>
@@ -40,6 +40,14 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
         <resource-file src="resources/android/sounds/doorbell.mp3" target="app/src/main/res/raw/doorbell.mp3" />
+        <resource-file src="resources/android/xml/shortcut_open_door.xml" target="app/src/main/res/xml/shortcuts.xml" />
+        <config-file parent="/*" target="app/src/main/res/values/strings.xml">
+            <string name="open_door_shortcut_description">Open Sesame</string>
+            <string name="open_door_shortcut_description_long">Open Door using the buzzer</string>
+        </config-file>
+        <config-file parent="/manifest/application/activity[@android:name='MainActivity']" target="AndroidManifest.xml">
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+        </config-file>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -78,11 +86,12 @@
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
-    <plugin name="cordova-plugin-device" spec="^2.0.1" />
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.3.3" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
-    <engine name="android" spec="7.1.0" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^1.2.1" />
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
+    <plugin name="onesignal-cordova-plugin" spec="^2.4.1" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-shortcuts-android" spec="0.1.0" />
+    <engine name="android" spec="^7.1.2" />
 </widget>

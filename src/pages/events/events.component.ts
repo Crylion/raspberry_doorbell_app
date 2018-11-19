@@ -54,8 +54,8 @@ export class EventsPage implements OnInit, OnDestroy {
 	 */
 	public confirmDeletion () {
 		const alert = this.alertCtrl.create({
-			title: 'Confirm purchase',
-			message: 'Do you want to buy this book?',
+			title: 'Confirm deletion',
+			message: 'Do you want to delete all events (permanently!)?',
 			buttons: [
 				{
 					text: 'Cancel',

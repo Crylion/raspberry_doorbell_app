@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { OneSignal, OSNotification } from '@ionic-native/onesignal';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
+import { OneSignal, OSNotification } from '@ionic-native/onesignal/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Store } from '@ngrx/store';
 import { Nav, Platform } from 'ionic-angular';
 
@@ -13,6 +13,9 @@ import { ServerPreferencesPage } from '../pages/preferences/server/server';
 import * as ServerState from '../pages/preferences/server/serverState.actions';
 import { ApiService } from '../services/apiService';
 import { AppState } from './app.state';
+import { isNullOrUndefined } from 'util';
+
+declare const window: any;
 
 @Component({
 	templateUrl: 'app.html'
@@ -80,12 +83,11 @@ export class MyApp implements OnInit {
 
 	private initializeApp () {
 		this.platform.ready().then(() => {
-			// Okay, so the platform is ready and our plugins are available.
-			// Here you can do any higher level native things you might need.
+
 			this.statusBar.styleDefault();
 			this.splashScreen.hide();
 
-			// One Signal Initilization
+			// One Signal Initilization ---
 			this.oneSignal.startInit('45ac3327-f972-4067-85d0-ec8ac1cfbdb4', '811081666028');
 
 			this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
@@ -103,6 +105,16 @@ export class MyApp implements OnInit {
 			});
 
 			this.oneSignal.endInit();
+			// --- end of One Signal Initialization
+
+			window.plugins.Shortcuts.getIntent((intent) => {
+				if (!isNullOrUndefined(intent) && intent.action === 'net.crylion.raspberry_doorbell.OPENDOOR') {
+					this.apiService.openDoor().subscribe(() => {
+						console.log('door opened via shortcut');
+					});
+				}
+			});
+
 		});
 	}
 
